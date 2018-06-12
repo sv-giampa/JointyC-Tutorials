@@ -64,5 +64,5 @@ grammar:{
 	//context-sensitive list (the interpreter must do the context checks)
 	equalNumbersList = $equalOpen $number equalNumbersTail;
 	equalNumbersTail = $comma $number equalNumbersTail | $equalClose;
-	
+
 }
