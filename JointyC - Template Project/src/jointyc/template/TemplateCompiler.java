@@ -11,6 +11,7 @@ import jointyc.analysis.parser.exception.UnexpectedSymbolException;
 import jointyc.analysis.semantic.exception.SemanticException;
 import jointyc.jdlc.JdlCompiler;
 
+//façade of the compiler
 public class TemplateCompiler {
 	
 	//declare the standard compiler for the language

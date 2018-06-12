@@ -21,48 +21,49 @@ import java.util.List;
 
 import jointyc.analysis.parser.SyntaxTree;
 import jointyc.analysis.semantic.Interpreter;
+import jointyc.analysis.semantic.annotation.NonTerminalToken;
+import jointyc.analysis.semantic.annotation.TerminalToken;
 import jointyc.analysis.semantic.exception.SemanticException;
 
 public class HelloWorldInterpreter implements Interpreter{
-
-	@Override
-	public Object terminal(SyntaxTree tree) throws SemanticException {
-		switch(tree.type()) {
-		case "HelloWorld.hello":
-			System.out.print("hello ");
-			break;
-		case "HelloWorld.world":
-			System.out.print("world");
-			break;
-		case "HelloWorld.exclamation":
-			System.out.print("!");
-			break;
-		}
-		return null;
+	
+	@TerminalToken(type="HelloWorld.hello")
+	private void hello() {
+		System.out.print("hello ");
+	}
+	
+	@TerminalToken(type="HelloWorld.world")
+	private void world() {
+		System.out.print("world");
+	}
+	
+	@TerminalToken(type="HelloWorld.exclamation")
+	private void exclamation() {
+		System.out.print("!");
 	}
 
-	@Override
-	public void nonTerminal(SyntaxTree tree, List<Object> resultsBuffer) throws SemanticException {
-		
-		//is this a non empty non-terminal "hello" node? (specific "hello" semantics)
-		if(tree.query("HelloWorld.hello", "!#")) {
-			System.out.println("the world has been greeted :-D");
-		}
-		
-		//is this a non-terminal "hello" node? (must be verified after specific "hello" semantics)
-		else if(tree.query("HelloWorld.hello")) {
-			System.out.println("no greeting to the world :-(");
-		}
-		
-		//is this an empty non-terminal "exclamation" node?
-		else if(tree.query("HelloWorld.exclamation", "#")) {
-			System.out.println("\ngreeting not enthusiastic :-(");
-		}
-		
-		//is this a non-terminal "exclamation" with a terminal "exclamation" token as production first?
-		else if(tree.query("HelloWorld.exclamation", "$HelloWorld.exclamation")) {
-			System.out.println("\nenthusiastic greeting :-D");
-		}
+	//non empty non-terminal "hello" node
+	@NonTerminalToken(ruleHead = "HelloWorld.hello", ruleProduction = {"!#"})
+	private void nonEmptyHello() {
+		System.out.println("the world has been greeted :-D");
+	}
+
+	//empty non-terminal "hello" node
+	@NonTerminalToken(ruleHead = "HelloWorld.hello", ruleProduction = {"#"})
+	private void emptyHello() {
+		System.out.println("no greeting to the world :-(");
+	}
+
+	//empty "exclamation" node
+	@NonTerminalToken(ruleHead = "HelloWorld.exclamation", ruleProduction = {"#"})
+	private void emptyExclamation() {
+		System.out.println("\ngreeting not enthusiastic :-(");
+	}
+
+	//non empty "exclamation" node
+	@NonTerminalToken(ruleHead = "HelloWorld.exclamation", ruleProduction = {"$HelloWorld.exclamation"})
+	private void nonTerminalHello() {
+		System.out.println("\nenthusiastic greeting :-D");
 	}
 
 }

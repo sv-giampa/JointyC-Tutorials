@@ -5,7 +5,7 @@
 language: template;
 
 lexicon:{
-	templateTerminal = /template/$, "template terminal description";
+	templateTerminal = /terminal/$, "template terminal description";
 	
 	//matches the string "composite terminal"
 	compositeTerminal = </composite\s/$ & templateTerminal>;
