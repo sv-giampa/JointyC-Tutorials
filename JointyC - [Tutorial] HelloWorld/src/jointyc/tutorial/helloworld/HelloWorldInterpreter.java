@@ -17,15 +17,11 @@
 
 package jointyc.tutorial.helloworld;
 
-import java.util.List;
-
-import jointyc.analysis.parser.SyntaxTree;
 import jointyc.analysis.semantic.Interpreter;
 import jointyc.analysis.semantic.annotation.NonTerminalToken;
 import jointyc.analysis.semantic.annotation.TerminalToken;
-import jointyc.analysis.semantic.exception.SemanticException;
 
-public class HelloWorldInterpreter implements Interpreter{
+class HelloWorldInterpreter implements Interpreter{
 	
 	@TerminalToken(type="HelloWorld.hello")
 	private void hello() {
@@ -62,7 +58,7 @@ public class HelloWorldInterpreter implements Interpreter{
 
 	//non empty "exclamation" node
 	@NonTerminalToken(ruleHead = "HelloWorld.exclamation", ruleProduction = {"$HelloWorld.exclamation"})
-	private void nonTerminalHello() {
+	private void nonEmptyExclamation() {
 		System.out.println("\nenthusiastic greeting :-D");
 	}
 
